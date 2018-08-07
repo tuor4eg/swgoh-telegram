@@ -12,7 +12,7 @@ bot.on('message', function (msg) {
     const userName = (msg.chat.username) ? ` ${msg.chat.username}` : '';
     console.log(msg);
     switch (true) {
-        case (msg.text === '/start'):
+        case (msg.text === '/start' || msg.text === 'start'):
             console.log('Greetings');
             bot.sendMessage(chatId, `Oh dear! Master${userName}, it's so good to see you fully functional again.`, {caption: "Hello!"});
             break;
@@ -22,12 +22,12 @@ bot.on('message', function (msg) {
             console.log(charName);
             parceSwgoh(urlParse, charName).then(res => bot.sendMessage(chatId, res, {caption: "It's work!"}));
             break;
-        case (msg.text === '/getallchars'):
+        case (msg.text === 'getallchars' || msg.text === '/getallchars'):
             var charName = 'getallchars';
             console.log('List of chars');
             parceSwgoh(urlParse, charName).then(res => bot.sendMessage(chatId, res, {caption: "It's work!"}));
             break;
-        case (msg.text === '/guild'):
+        case (msg.text === 'guild' || msg.text === '/guild'):
             console.log('My guild');
             const res = `Your guild ID is ${guildId}`;
             bot.sendMessage(chatId, res, {caption: "It's work!"});
@@ -39,6 +39,8 @@ bot.on('message', function (msg) {
             bot.sendMessage(chatId, result, {caption: "You do it wrong!"});
             break;
     }
+    const readyToWrite = JSON.stringify({ from: msg.from, guild: guildId });
+    console.log(JSON.parse(readyToWrite));
 });
 
 const urlParse = `https://swgoh.gg/api/guilds/${guildId}/units/`;
