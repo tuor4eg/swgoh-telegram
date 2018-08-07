@@ -3,31 +3,45 @@ require('dotenv').config();
 var TelegramBot = require('node-telegram-bot-api');
 var fetch = require('node-fetch');
 var token = process.env.TOKEN;
+var guildId = process.env.DEFAULT_ID;
 var bot = new TelegramBot(token, {polling: true});
 
 bot.on('message', function (msg) {
-    var chatId = msg.chat.id;
+    let chatId = msg.chat.id;
+    var charName = '';
+    const userName = (msg.chat.username) ? ` ${msg.chat.username}` : '';
     console.log(msg);
-    if (msg.text.includes('getchar')) {
-        console.log('Prepare char');
-        const charName = msg.text.split(':')[1];
-        console.log(charName);
-        parceSwgoh(urlParse, charName).then(res => bot.sendMessage(chatId, res, {caption: "It's work!"}));
-        return;
-    }
-    if (msg.text === '/getallchars') {
-        const charName = 'getallchars';
-        console.log('List of chars');
-        parceSwgoh(urlParse, charName).then(res => bot.sendMessage(chatId, res, {caption: "It's work!"}));
-        return;
-    }
-    else {
-        console.log('something wrong');
-        bot.sendMessage(chatId, "Sorry, Master, I know languages of 6,000,000 life forms but didn't understand you! Please try again.", {caption: "You do in wrong!"});
+    switch (true) {
+        case (msg.text === '/start'):
+            console.log('Greetings');
+            bot.sendMessage(chatId, `Oh dear! Master${userName}, it's so good to see you fully functional again.`, {caption: "Hello!"});
+            break;
+        case (msg.text.includes('getchar')):
+            console.log('Prepare char');
+            var charName = msg.text.split(':')[1];
+            console.log(charName);
+            parceSwgoh(urlParse, charName).then(res => bot.sendMessage(chatId, res, {caption: "It's work!"}));
+            break;
+        case (msg.text === '/getallchars'):
+            var charName = 'getallchars';
+            console.log('List of chars');
+            parceSwgoh(urlParse, charName).then(res => bot.sendMessage(chatId, res, {caption: "It's work!"}));
+            break;
+        case (msg.text === '/guild'):
+            console.log('My guild');
+            const res = `Your guild ID is ${guildId}`;
+            bot.sendMessage(chatId, res, {caption: "It's work!"});
+            break;
+        default:
+            console.log('something wrong');
+            const genRandom = Math.floor(Math.random() * replies.length);
+            const result = replies[genRandom];
+            bot.sendMessage(chatId, result, {caption: "You do it wrong!"});
+            break;
     }
 });
 
-const urlParse = 'https://swgoh.gg/api/guilds/14744/units/';
+const urlParse = `https://swgoh.gg/api/guilds/${guildId}/units/`;
 
 const parceSwgoh = async (url, char) => {
     const getData = await fetch(urlParse);
@@ -36,7 +50,7 @@ const parceSwgoh = async (url, char) => {
     const dataToJson = JSON.parse(data);
     const getKeys = Object.keys(dataToJson);
     if (!char) {
-        return 'Enter character name, please!'
+        return 'Enter character name, please! Format: getchar:CHARNAME'
     }
     if (char === 'getallchars') {
         return getKeys.join('\n');
@@ -51,7 +65,22 @@ const parceSwgoh = async (url, char) => {
             const { player, gear_level, level, rarity } = element;
             return [`Player: ${player}`, ` stars: ${rarity} `, ` gear level: ${gear_level}`];
         });
-        console.log('Char ready');
+        console.log('Character is ready');
         return makeView.join('\n');
     }
   };
+
+  const replies = [
+    "Sorry, Master, I know languages of 6,000,000 life forms but I don't understand you! Please try again.",
+    "I have a bad felling about this...",
+    "It's a trap!",
+    "Help me, Obi-Wan Kenobi. You’re my only hope.",
+    "I find your lack of faith disturbing.",
+    "Do. Or do not. There is no try.",
+    "Pew-pew-pew",
+    "I’m one with the Force. The Force is with me.",
+    "May the force be with you.",
+    "Use the force, Luke.",
+    "Fear is the path to the dark side.",
+    "It was said that you would destroy the Sith, not join them."
+  ];
