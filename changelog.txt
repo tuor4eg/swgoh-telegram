@@ -1,0 +1,4 @@
+======SWGOH API bot's changeLog======
+
+=====version 0.1.0=====
+* alpha-
