@@ -34,7 +34,7 @@ bot.on('message', function (msg) {
             console.log('List of chars');
             getCurrentChar.getCurrentChar(urlParse, charName).then(res => bot.sendMessage(chatId, res, {caption: "It's work!"}));
             break;
-        case (msg.text === 'guild' || msg.text === '/guild'):
+        case (msg.text === '/guild'):
             console.log('My guild');
             const res = `Your guild ID is ${guildId}`;
             bot.sendMessage(chatId, res, {caption: "It's work!"});
