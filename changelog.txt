@@ -1,4 +1,10 @@
 ======SWGOH API bot's changeLog======
 
-=====version 0.1.0=====
-* alpha-
+=====version 0.1.0 by 2018 Aug 06=====
+* alpha-version of bot;
+* Add command "/getallchars" to show list of characters in game;
+* Add command /getchar:CHARNAME to show progress by this characters of Guild members;
+* Add command "/guild" to show current guild bot is working with;
+
+=====version 0.1.1 by 2018 Aug 08=====
+* Add command "/getphase:PHASENUMBER to show players with full packs for this phase;

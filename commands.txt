@@ -1,0 +1,6 @@
+getallchars - Print list of all characters in game.
+getchar - Print information of this character's progress by Giuld members. Use format: getchar:CHARNAME.
+getphase - Print Guild members with full packs for this phase of Sith's Triumvirate.
+guild - Show your current Guild ID.
+history - Print bot's changelog.
+version - Show current bot's version.

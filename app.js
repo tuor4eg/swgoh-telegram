@@ -3,12 +3,13 @@ require('dotenv').config();
 const getReadyForPhase = require('./filterSiths.js');
 const getCurrentChar = require('./getchars.js');
 const arrays = require('./arrays.js');
+const fs = require('fs');
 
-var TelegramBot = require('node-telegram-bot-api');
-var fetch = require('node-fetch');
-var token = process.env.TOKEN;
-var guildId = process.env.DEFAULT_ID;
-var bot = new TelegramBot(token, {polling: true});
+const TelegramBot = require('node-telegram-bot-api');
+const fetch = require('node-fetch');
+const token = process.env.TOKEN;
+const guildId = process.env.DEFAULT_ID;
+const bot = new TelegramBot(token, {polling: true});
 
 const urlParse = `https://swgoh.gg/api/guilds/${guildId}/units/`;
 
@@ -58,6 +59,16 @@ bot.on('message', function (msg) {
                 bot.sendMessage(chatId, res[1], {caption: "It's work!"});
                 bot.sendMessage(chatId, `TOTAL READY: ${res[2]}`, {caption: "It's work!"});
             });
+            break;
+        case(msg.text === '/history'):
+            const getChangelog = fs.readFileSync('./changelog.txt').toString();
+            console.log('Changelog prepared.')
+            bot.sendMessage(chatId, getChangelog, {caption: "It's work!"});
+            break;
+        case(msg.text === '/version'):
+            const getVersion = fs.readFileSync('./version.txt').toString();
+            console.log('Version of bot')
+            bot.sendMessage(chatId, `The current version is ${getVersion}.`, {caption: "It's work!"});
             break;
         default:
             console.log('something wrong');
