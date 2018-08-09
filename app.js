@@ -1,18 +1,21 @@
+//main module to rule the bot
+
 require('dotenv').config();
 
+//Importing other modules
 const getReadyForPhase = require('./filterSiths.js');
 const getCurrentChar = require('./getchars.js');
 const arrays = require('./arrays.js');
 const fs = require('fs');
 
 const TelegramBot = require('node-telegram-bot-api');
-const fetch = require('node-fetch');
 const token = process.env.TOKEN;
 const guildId = process.env.DEFAULT_ID;
 const bot = new TelegramBot(token, {polling: true});
 
 const urlParse = `https://swgoh.gg/api/guilds/${guildId}/units/`;
 
+//bot's commands
 bot.on('message', function (msg) {
     let chatId = msg.chat.id;
     var charName = '';
@@ -40,6 +43,7 @@ bot.on('message', function (msg) {
             bot.sendMessage(chatId, res, {caption: "It's work!"});
             break;
         case(msg.text.includes('/getphase')):
+        //Validate phase number
             const parsePhase = Number(msg.text.split(':')[1]);
             if (isNaN(parsePhase)) {
                 console.log('Wrong declaration of phase');

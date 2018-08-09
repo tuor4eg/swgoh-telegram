@@ -1,3 +1,5 @@
+//Module for listing progress of character
+
 const fetch = require('node-fetch');
 
 const getCurrentChar = async (url, char) => {
@@ -10,6 +12,7 @@ const getCurrentChar = async (url, char) => {
         return 'Enter character name, please! Format: getchar:CHARNAME'
     }
     if (char === 'getallchars') {
+        //Return list of all characters
         return getKeys.join('\n');
     }
     else {

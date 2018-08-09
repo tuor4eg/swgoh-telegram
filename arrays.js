@@ -1,3 +1,6 @@
+//Repository for data
+
+//Packs of characters for phases
 const packsForSiths = {
     phase1: [
         'REYJEDITRAINING',
@@ -33,6 +36,7 @@ const packsForSiths = {
     ]
 };
 
+//Replies for unknown commands to bot
 const replies = [
     "Sorry, Master, I know languages of 6,000,000 life forms but I don't understand you! Please try again.",
     "I have a bad felling about this...",
