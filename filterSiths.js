@@ -9,7 +9,7 @@ const arrays = require('./arrays.js');
 var guildId = process.env.DEFAULT_ID;
 
 const getReadyForPhase = async (url, phase) => {
-    const getData = await fetch(urlParse);
+    const getData = await fetch(url);
     console.log(getData.status);
     const data = await getData.text();
     const dataToJson = JSON.parse(data);
