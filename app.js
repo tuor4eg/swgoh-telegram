@@ -64,9 +64,34 @@ bot.on('message', function (msg) {
                 bot.sendMessage(chatId, `TOTAL READY: ${res[2]}`, {caption: "It's work!"});
             });
             break;
+        //Admin's section
+        case(msg.text === '/penaltieslist' && msg.from.username === 'vA_Tuor4eg'):
+            const getPeenalties = fs.readFileSync('/tmp/penalties.txt').toString();
+            console.log('List of penalties is prepared.')
+            const penaltiesMessage = (getPeenalties !== '') ? getPeenalties : 'Excellent news, Master! There is no penalties for now!';
+            bot.sendMessage(chatId, penaltiesMessage, {caption: "It's work!"});
+            break;
+        case(msg.text === '/clearpenalties' && msg.from.username === 'vA_Tuor4eg'):
+            fs.writeFile('/tmp/penalties.txt', '', () => {
+                console.log('List is clear');
+                bot.sendMessage(chatId, 'List is clear', {caption: "It's work!"});
+            });
+            break;
+        case(msg.text.includes('/set') && msg.from.username === 'vA_Tuor4eg'):
+            const [command, user, raid] = msg.text.split(':');
+            console.log(user, raid);
+            const writeRes = `${user}: ${raid}\n`;
+            fs.appendFile('/tmp/penalties.txt',  writeRes, (err) => {
+                if (err) throw err;
+                console.log(writeRes);
+                console.log('The penalties list has been udated!');
+                bot.sendMessage(chatId, 'Update list', {caption: "It's work!"});
+              });
+            break;
+        //End of admin's section
         case(msg.text === '/history'):
             const getChangelog = fs.readFileSync('./changelog.txt').toString();
-            console.log('Changelog prepared.')
+            console.log('Changelog is prepared.')
             bot.sendMessage(chatId, getChangelog, {caption: "It's work!"});
             break;
         case(msg.text === '/version'):
