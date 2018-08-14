@@ -14,6 +14,8 @@ const guildId = process.env.DEFAULT_ID;
 const bot = new TelegramBot(token, {polling: true});
 
 const urlParse = `https://swgoh.gg/api/guilds/${guildId}/units/`;
+const firtsDate = new Date(2018, 7, 13);
+const beginBank = []
 
 //bot's commands
 bot.on('message', function (msg) {
@@ -87,6 +89,11 @@ bot.on('message', function (msg) {
                 console.log('The penalties list has been udated!');
                 bot.sendMessage(chatId, 'Update list', {caption: "It's work!"});
               });
+            break;
+        case(msg.text === '/makemsg' && msg.from.username === 'vA_Tuor4eg'):
+            const currentDate = new Date();
+            console.log(firtsDate, currentDate);
+            bot.sendMessage(chatId, arrays.raidMessage('14 августа', '15 августа'), {caption: "It's work!"});
             break;
         //End of admin's section
         case(msg.text === '/history'):
