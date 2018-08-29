@@ -16,7 +16,7 @@ const getCurrentChar = async (url, char) => {
         return getKeys.join('\n');
     }
     else {
-        const findChar = getKeys.filter(element => element === char);
+        const findChar = getKeys.filter(element => element === char.toUpperCase());
         if (findChar.length === 0) {
             return 'No characters found!'
         }
