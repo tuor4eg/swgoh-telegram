@@ -9,9 +9,22 @@ const arrays = require('./arrays.js');
 const fs = require('fs');
 
 const TelegramBot = require('node-telegram-bot-api');
+const agent = require('socks5-https-client/lib/Agent');
 const token = process.env.TOKEN;
 const guildId = process.env.DEFAULT_ID;
-const bot = new TelegramBot(token, {polling: true});
+const bot = new TelegramBot(token, {
+    polling: true,
+    request: {
+        agentClass: agent,
+		agentOptions: {
+			socksHost: process.env.PROXY_SOCKS5_HOST,
+			socksPort: parseInt(process.env.PROXY_SOCKS5_PORT),
+			// If authorization is needed:
+			socksUsername: process.env.PROXY_SOCKS5_USERNAME,
+			socksPassword: process.env.PROXY_SOCKS5_PASSWORD
+		}
+      }
+});
 
 const urlParse = `https://swgoh.gg/api/guilds/${guildId}/units/`;
 const firtsDate = new Date(2018, 7, 13);
